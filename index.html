@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="images/Logo.png">
+    <title>Chadad Shop</title>
+  </head>
+  <body>
+    <div id="loader">
+      <div class="loader"></div>
+    </div>
+    <header>
+      <a href="#" class="logo">Chadad Shop</a>
+      <nav class="navigation">
+        <a href="#services">Services</a>
+        <a href="#projects">Products</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="main">
+      <div>
+        <h2>Chadad Shop welcomes you<br /><span>Clothing store</span></h2>
+        <h3>
+          Thi website will be your catalogue for avariable clothes in our store
+          before coming
+        </h3>
+        <a href="#projects" class="main-btn">View our products</a>
+        <div class="social-icons">
+          <a href="https://wa.me/2126351128" target="_blank"
+            ><i class="fab fa-whatsapp"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/chadad_shop/?utm_source=ig_web_button_share_sheet"
+            target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cards" id="services">
+      <h2 class="title">Services</h2>
+      <div class="content">
+        <div class="card">
+          <div class="icon">
+            <i class="fa-solid fa-shirt"></i>
+          </div>
+          <div class="info">
+            <h3>Selling clothes</h3>
+            <p>
+              Our store offer good clothes with high quality and perfect prices
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
+      <h2 class="title">Products</h2>
+      <div class="content" id="product-list"></div>
+    </section>
+
+    <section class="cards contact" id="contact">
+      <h2 class="title">Let's work together</h2>
+      <div class="content">
+        <div class="card">
+          <div class="icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <div class="info">
+            <h3>Phone</h3>
+            <p>+2126351128</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="icon">
+            <i class="fab fa-instagram"></i>
+          </div>
+          <div class="info">
+            <h3>Instagram</h3>
+            <p>@chadad_shop</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p class="footer-title">Copyrights @ <span>Chadad Shop </span></p>
+      <div class="social-icons">
+        <a href="https://wa.me/2126351128" target="_blank"
+          ><i class="fab fa-whatsapp"></i
+        ></a>
+        <a
+          href="https://www.instagram.com/chadad_shop/?utm_source=ig_web_button_share_sheet"
+          target="_blank"
+          ><i class="fab fa-instagram"></i
+        ></a>
+      </div>
+    </footer>
+
+    <script>
+      const sheetURL =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4w2sfWDGeMCXrej_srNyhATHuiIkCTJbQTmuO9Cq3dJ9qDil6YmtMZm6Q6gIaeQCHsyiKNO1hGtdO/pub?output=csv";
+
+      async function loadProducts() {
+        const res = await fetch(sheetURL);
+        const data = await res.text();
+        const rows = data.split("\n").slice(1); // Skip header
+
+        const container = document.getElementById("product-list");
+        container.innerHTML = "";
+
+        rows.forEach((row) => {
+          const [name, category, imageLink, description] = row.split(",");
+
+          // Extract Google Drive ID if it exists
+          let imageId = "";
+          const match = imageLink.match(/[-\w]{25,}/);
+          if (match) {
+            imageId = match[0];
+          }
+
+          const productHTML = `
+            <div class="project-card">
+              <div class="project-image">
+                <img src="https://drive.google.com/uc?export=view&id=${imageId}" alt="${name}">
+              </div>
+              <div class="project-info">
+                <p class="project-category">${category}</p>
+                <strong class="project-title">
+                  <span>${name}</span>
+                  <a href="#" class="more-details">More details</a>
+                </strong>
+                <p style="margin-top: 10px">${description}</p>
+              </div>
+            </div>
+          `;
+
+          container.innerHTML += productHTML;
+        });
+      }
+
+      loadProducts();
+    </script>
+
+    <script>
+      window.addEventListener("load", function () {
+        document.getElementById("loader").style.display = "none";
+      });
+    </script>
+  </body>
+</html>
