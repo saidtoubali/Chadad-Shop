@@ -12,7 +12,7 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/png" href="images/Logo.png">
+    <link rel="icon" type="image/png" href="images/Logo.png" />
     <title>Chadad Shop</title>
   </head>
   <body>
@@ -44,6 +44,19 @@
             href="https://www.instagram.com/chadad_shop/?utm_source=ig_web_button_share_sheet"
             target="_blank"
             ><i class="fab fa-instagram"></i
+          ></a>
+          <a
+            href="https://maps.app.goo.gl/A8WM6EXW8ELq73Ea7?g_st=aw"
+            target="_blank"
+            ><i class="fas fa-location-dot"></i
+          ></a>
+          <a
+            href="https://www.tiktok.com/@chadad.shop?_t=ZM-8vJVkrqswkx&_r=1"
+            target="_blank"
+            ><i class="fa-brands fa-tiktok"></i
+          ></a>
+          <a href="https://www.facebook.com/share/18oXdCeTsN/" target="_blank"
+            ><i class="fa-brands fa-facebook"></i
           ></a>
         </div>
       </div>
@@ -106,58 +119,64 @@
           target="_blank"
           ><i class="fab fa-instagram"></i
         ></a>
+        <a
+            href="https://maps.app.goo.gl/A8WM6EXW8ELq73Ea7?g_st=aw"
+            target="_blank"
+            ><i class="fas fa-location-dot"></i
+          ></a>
+          <a
+            href="https://www.tiktok.com/@chadad.shop?_t=ZM-8vJVkrqswkx&_r=1"
+            target="_blank"
+            ><i class="fa-brands fa-tiktok"></i
+          ></a>
+          <a href="https://www.facebook.com/share/18oXdCeTsN/" target="_blank"
+            ><i class="fa-brands fa-facebook"></i
+          ></a>
       </div>
     </footer>
 
     <script>
-      const sheetURL =
-        "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4w2sfWDGeMCXrej_srNyhATHuiIkCTJbQTmuO9Cq3dJ9qDil6YmtMZm6Q6gIaeQCHsyiKNO1hGtdO/pub?output=csv";
+  document.addEventListener("DOMContentLoaded", () => {
+    const sheetUrl =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4w2sfWDGeMCXrej_srNyhATHuiIkCTJbQTmuO9Cq3dJ9qDil6YmtMZm6Q6gIaeQCHsyiKNO1hGtdO/pub?output=csv";
 
-      async function loadProducts() {
-        const res = await fetch(sheetURL);
-        const data = await res.text();
-        const rows = data.split("\n").slice(1); // Skip header
+    const productsContainer = document.querySelector(".projects .content");
 
-        const container = document.getElementById("product-list");
-        container.innerHTML = "";
+    fetch(sheetUrl)
+      .then((response) => response.text())
+      .then((csv) => {
+        const lines = csv.trim().split("\n").slice(1);
+        productsContainer.innerHTML = "";
 
-        rows.forEach((row) => {
-          const [name, category, imageLink, description] = row.split(",");
+        lines.forEach((line) => {
+          const [name, category, imageUrl, description] = line.split(",");
 
-          // Extract Google Drive ID if it exists
-          let imageId = "";
-          const match = imageLink.match(/[-\w]{25,}/);
-          if (match) {
-            imageId = match[0];
-          }
+          const card = document.createElement("div");
+          card.classList.add("project-card");
 
-          const productHTML = `
-            <div class="project-card">
-              <div class="project-image">
-                <img src="https://drive.google.com/uc?export=view&id=${imageId}" alt="${name}">
-              </div>
-              <div class="project-info">
-                <p class="project-category">${category}</p>
-                <strong class="project-title">
-                  <span>${name}</span>
-                  <a href="#" class="more-details">More details</a>
-                </strong>
-                <p style="margin-top: 10px">${description}</p>
-              </div>
+          card.innerHTML = `
+            <div class="project-image">
+              <img src="${imageUrl.trim()}" alt="${name.trim()}" />
+            </div>
+            <div class="project-info">
+              <p class="project-category">${category.trim()}</p>
+              <strong class="project-title">
+                <span>${name.trim()}</span>
+                <a href="#" class="more-details">${description.trim()}</a>
+              </strong>
             </div>
           `;
 
-          container.innerHTML += productHTML;
+          productsContainer.appendChild(card);
         });
-      }
-
-      loadProducts();
-    </script>
-
-    <script>
-      window.addEventListener("load", function () {
-        document.getElementById("loader").style.display = "none";
+      })
+      .catch((error) => {
+        console.error("Error loading products:", error);
+        productsContainer.innerHTML =
+          "<p>Failed to load products. Please try again later.</p>";
       });
-    </script>
+  });
+</script>
+
   </body>
 </html>
