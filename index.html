@@ -16,9 +16,6 @@
     <title>Chadad Shop</title>
   </head>
   <body>
-    <div id="loader">
-      <div class="loader"></div>
-    </div>
     <header>
       <a href="#" class="logo">Chadad Shop</a>
       <nav class="navigation">
@@ -32,7 +29,7 @@
       <div>
         <h2>Chadad Shop welcomes you<br /><span>Clothing store</span></h2>
         <h3>
-          Thi website will be your catalogue for avariable clothes in our store
+          This website will be your catalogue for available clothes in our store
           before coming
         </h3>
         <a href="#projects" class="main-btn">View our products</a>
@@ -40,9 +37,7 @@
           <a href="https://wa.me/2126351128" target="_blank"
             ><i class="fab fa-whatsapp"></i
           ></a>
-          <a
-            href="https://www.instagram.com/chadad_shop/?utm_source=ig_web_button_share_sheet"
-            target="_blank"
+          <a href="https://www.instagram.com/chadad_shop/" target="_blank"
             ><i class="fab fa-instagram"></i
           ></a>
           <a
@@ -66,14 +61,10 @@
       <h2 class="title">Services</h2>
       <div class="content">
         <div class="card">
-          <div class="icon">
-            <i class="fa-solid fa-shirt"></i>
-          </div>
+          <div class="icon"><i class="fa-solid fa-shirt"></i></div>
           <div class="info">
             <h3>Selling clothes</h3>
-            <p>
-              Our store offer good clothes with high quality and perfect prices
-            </p>
+            <p>Our store offers high-quality clothes at perfect prices.</p>
           </div>
         </div>
       </div>
@@ -81,25 +72,23 @@
 
     <section class="projects" id="projects">
       <h2 class="title">Products</h2>
-      <div class="content" id="product-list"></div>
+      <div class="content" id="product-list">
+        <!-- Products will be inserted here -->
+      </div>
     </section>
 
     <section class="cards contact" id="contact">
       <h2 class="title">Let's work together</h2>
       <div class="content">
         <div class="card">
-          <div class="icon">
-            <i class="fas fa-phone"></i>
-          </div>
+          <div class="icon"><i class="fas fa-phone"></i></div>
           <div class="info">
             <h3>Phone</h3>
             <p>+2126351128</p>
           </div>
         </div>
         <div class="card">
-          <div class="icon">
-            <i class="fab fa-instagram"></i>
-          </div>
+          <div class="icon"><i class="fab fa-instagram"></i></div>
           <div class="info">
             <h3>Instagram</h3>
             <p>@chadad_shop</p>
@@ -114,69 +103,64 @@
         <a href="https://wa.me/2126351128" target="_blank"
           ><i class="fab fa-whatsapp"></i
         ></a>
-        <a
-          href="https://www.instagram.com/chadad_shop/?utm_source=ig_web_button_share_sheet"
-          target="_blank"
+        <a href="https://www.instagram.com/chadad_shop/" target="_blank"
           ><i class="fab fa-instagram"></i
         ></a>
         <a
-            href="https://maps.app.goo.gl/A8WM6EXW8ELq73Ea7?g_st=aw"
-            target="_blank"
-            ><i class="fas fa-location-dot"></i
-          ></a>
-          <a
-            href="https://www.tiktok.com/@chadad.shop?_t=ZM-8vJVkrqswkx&_r=1"
-            target="_blank"
-            ><i class="fa-brands fa-tiktok"></i
-          ></a>
-          <a href="https://www.facebook.com/share/18oXdCeTsN/" target="_blank"
-            ><i class="fa-brands fa-facebook"></i
-          ></a>
+          href="https://www.tiktok.com/@chadad.shop?_t=ZM-8vJVkrqswkx&_r=1"
+          target="_blank"
+          ><i class="fa-brands fa-tiktok"></i
+        ></a>
+        <a href="https://www.facebook.com/share/18oXdCeTsN/" target="_blank"
+          ><i class="fa-brands fa-facebook"></i
+        ></a>
       </div>
     </footer>
 
     <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const sheetUrl =
-      "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4w2sfWDGeMCXrej_srNyhATHuiIkCTJbQTmuO9Cq3dJ9qDil6YmtMZm6Q6gIaeQCHsyiKNO1hGtdO/pub?output=csv";
+      document.addEventListener("DOMContentLoaded", function () {
+        const sheetUrl =
+          "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfjMbex_bP9BXIEqqo3HLdrEUiZTjCEcyV2vwY5Ts7Dr1OfvdDf1o5Z3eahVt8KlIS3BLSId2mWamU/pub?output=csv";
+        const productContainer = document.querySelector(".projects .content");
 
-    const productsContainer = document.querySelector(".projects .content");
+        fetch(sheetUrl)
+          .then((response) => response.text())
+          .then((csvText) => {
+            const rows = csvText.split("\n").slice(1); // Skip header row
+            rows.forEach((row) => {
+              const cols = row.split(",");
 
-    fetch(sheetUrl)
-      .then((response) => response.text())
-      .then((csv) => {
-        const lines = csv.trim().split("\n").slice(1);
-        productsContainer.innerHTML = "";
+              if (cols.length >= 7) {
+                const name = cols[1];
+                const category = cols[2];
+                const description = cols[3];
+                const imageID = cols[5]; // Column F = Image ID
 
-        lines.forEach((line) => {
-          const [name, category, imageUrl, description] = line.split(",");
+                const imageUrl = `https://lh3.googleusercontent.com/d/${imageID}`;
 
-          const card = document.createElement("div");
-          card.classList.add("project-card");
-
-          card.innerHTML = `
-            <div class="project-image">
-              <img src="${imageUrl.trim()}" alt="${name.trim()}" />
-            </div>
-            <div class="project-info">
-              <p class="project-category">${category.trim()}</p>
-              <strong class="project-title">
-                <span>${name.trim()}</span>
-                <a href="#" class="more-details">${description.trim()}</a>
-              </strong>
-            </div>
-          `;
-
-          productsContainer.appendChild(card);
-        });
-      })
-      .catch((error) => {
-        console.error("Error loading products:", error);
-        productsContainer.innerHTML =
-          "<p>Failed to load products. Please try again later.</p>";
+                // Create product card using your existing structure and classes
+                const card = document.createElement("div");
+                card.className = "project-card";
+                card.innerHTML = `
+                  <div class="project-image">
+                    <img src="${imageUrl}" alt="${name}" />
+                  </div>
+                  <div class="project-info">
+                    <p class="project-category">${category}</p>
+                    <strong class="project-title">
+                      <span>${name}</span>
+                    </strong>
+                    <p>${description}</p>
+                  </div>
+                `;
+                productContainer.appendChild(card);
+              }
+            });
+          })
+          .catch((error) => {
+            console.error("Error loading product data:", error);
+          });
       });
-  });
-</script>
-
+    </script>
   </body>
 </html>
