@@ -48,7 +48,7 @@ section {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: url(images/Wallpaper.jpg) no-repeat;
+    background: url(images/yd.jpg) no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -118,6 +118,7 @@ section {
     flex-wrap: wrap;
 }
 
+
 .card {
     background-color: #fff;
     width: 21.25em;
@@ -160,13 +161,15 @@ section {
 .project-card {
     background-color: #fff;
     border: 1px solid #fff;
-    min-height: 14em;
-    width: 23em;
+    width: 100%;
+    max-width: 23em;
     overflow: hidden;
     border-radius: 10px;
     margin: 20px;
     transition: 0.7s ease;
+    flex: 1 1 300px;
 }
+
 
 .project-card:hover {
    transform: scale(1.1);
@@ -176,9 +179,14 @@ section {
     opacity: 0.9;
  }
 
-.project-image img{
-    width: 100%
+ .project-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+    max-height: 250px;
 }
+
 
 .project-info {
     padding: 1em;
@@ -241,57 +249,132 @@ section {
     padding: 0 12px 0 0;
 }
 
-@media (max-width:1023px){
-    header{
-        padding: 12px 20px;
+
+/* ===== Responsive Layout ===== */
+
+@media (max-width: 1200px) {
+    header {
+      padding: 10px 100px;
     }
-
-    .navigation a{
-        padding-left: 10px;
+  
+    section {
+      padding: 80px 100px;
     }
-
-    .title{
-        font-size: 1.8em;
+  }
+  
+  @media (max-width: 992px) {
+    header {
+      padding: 10px 50px;
     }
-
-    section{
-        padding: 80px 20px;
+  
+    section {
+      padding: 70px 50px;
     }
-
-    .main-content h2{
-        font-size: 1em;
+  
+    .main h2 {
+      font-size: 1.2em;
     }
-
-    .main-content h3{
-        font-size: 1.6em;
+  
+    .main h2 span {
+      font-size: 2.5em;
     }
-
-    .content{
-        flex-direction: column;
-        align-items: center;
+  
+    .main h3 {
+      font-size: 1.5em;
     }
-
-}
-
-@media (max-width:641px){
-    body{
-        font-size: 12px;
+  
+    .project-card {
+      max-width: 100%;
+      margin: 10px;
     }
-
-    .main-content h2{
-        font-size: 0.8em;
+  
+    .footer {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
     }
-
-    .main-content h3{
-        font-size: 1.4em;
+  
+    .footer .social-icons {
+      justify-content: center;
+      flex-wrap: wrap;
     }
-}
-
-@media (max-width:300px){
-    body{
-        font-size: 10px;
-     
+  }
+  
+  @media (max-width: 768px) {
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px 20px;
     }
-}
-
+  
+    .navigation {
+      flex-direction: column;
+      width: 100%;
+      margin-top: 10px;
+    }
+  
+    .navigation a {
+      padding: 10px 0;
+      width: 100%;
+    }
+  
+    section {
+      padding: 60px 20px;
+    }
+  
+    .main h2 span {
+      font-size: 2em;
+    }
+  
+    .main h3 {
+      font-size: 1.2em;
+    }
+  
+    .main-btn {
+      font-size: 1em;
+      padding: 10px 20px;
+    }
+  
+    .card, .project-card {
+      width: 100%;
+      margin: 10px 0;
+    }
+  
+    .contact .info p {
+      font-size: 1.2em;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .main h2 {
+      font-size: 1em;
+    }
+  
+    .main h2 span {
+      font-size: 1.5em;
+    }
+  
+    .main h3 {
+      font-size: 1em;
+    }
+  
+    .main-btn {
+      font-size: 0.9em;
+    }
+  
+    .social-icons a {
+      font-size: 1.2em;
+      padding-right: 15px;
+    }
+  
+    .footer-title {
+      font-size: 1em;
+    }
+  
+    .project-title {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
   
